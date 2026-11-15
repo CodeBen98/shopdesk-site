@@ -1,0 +1,4 @@
+# Only public/ is published. Never put notes, docs, scripts or config in it.
+[build]
+  publish = "public"
+  command = ""

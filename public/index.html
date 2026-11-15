@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=1eac4d24-ddbd-4bbf-abca-572db84d0c75
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopDesk — Never Miss Another Call</title>
+  <meta name="description" content="ShopDesk answers every missed call, books the appointment, and reports back. Your business stays available 24/7. Live in 30 minutes." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b141e'/%3E%3Crect x='7' y='6' width='4' height='20' rx='2' fill='%230F7695'/%3E%3Ctext x='13' y='17' fill='%23F4F5F7' font-family='Arial' font-size='9' font-weight='700' letter-spacing='0.5'%3ESHOP%3C/text%3E%3Ctext x='13' y='25' fill='%237A8899' font-family='Arial' font-size='7' font-weight='500' letter-spacing='1'%3EDESK%3C/text%3E%3C/svg%3E" />
+  <meta property="og:title" content="ShopDesk — Never Miss Another Call" />
+  <meta property="og:description" content="ShopDesk answers every missed call, books the appointment, and reports back. Your business stays available 24/7. Live in 30 minutes." />
+  <meta property="og:url" content="https://shopdesk.site" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://shopdesk.site/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ShopDesk — Never Miss Another Call" />
+  <meta name="twitter:description" content="ShopDesk answers every missed call, books the appointment, and reports back. Your business stays available 24/7. Live in 30 minutes." />
+  <meta name="twitter:image" content="https://shopdesk.site/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #04070f;
+      --surface:      #0b141e;
+      --card:         #0f1824;
+      --accent:       #0f7695;
+      --accent-hover: #0c5f7f;
+      --accent-dim:   rgba(15,118,149,0.12);
+      --text:         #f4f5f7;
+      --text-mid:     #c3cad5;
+      --muted:        #7a8899;
+      --border:       rgba(255,255,255,0.08);
+      --border-soft:  rgba(255,255,255,0.05);
+      --success:      #22c55e;
+      --warning:      #f59e0b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─── */
+    #mainNav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 48px;
+      height: 68px;
+      background: rgba(4,7,15,0.6);
+      transition: background 0.3s ease, border-bottom 0.3s ease, backdrop-filter 0.3s ease;
+    }
+    #mainNav.scrolled {
+      background: rgba(4,7,15,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .logo-bar {
+      width: 4px;
+      height: 32px;
+      background: var(--accent);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .logo-text { display: flex; flex-direction: column; line-height: 1; gap: 1px; }
+    .logo-shop { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.02em; color: var(--text); }
+    .logo-desk { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 0.78rem; letter-spacing: 0.04em; color: var(--muted); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 22px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .nav-cta:hover { background: var(--accent-hover); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+    }
+
+    .hero-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      color: var(--text);
+      max-width: 18ch;
+    }
+    .hero-headline .accent-line { color: var(--accent); display: block; }
+
+    .hero-sub {
+      margin-top: 28px;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-mid);
+      line-height: 1.6;
+      max-width: 44ch;
+    }
+
+    .hero-actions {
+      margin-top: 44px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      padding: 16px 36px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+    .hero-demo-link {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .hero-demo-link:hover { color: var(--text-mid); }
+
+    .trust-strip {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .trust-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .trust-chip-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--muted);
+      flex-shrink: 0;
+    }
+    .trust-chip.accent { color: var(--accent); border-color: rgba(15,118,149,0.3); background: var(--accent-dim); }
+    .trust-chip.accent .trust-chip-dot { background: var(--accent); }
+
+    /* ─── EDITORIAL STAT ─── */
+    .stat-section {
+      padding: 120px 24px;
+      text-align: center;
+      border-top: 1px solid var(--border-soft);
+    }
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(5rem, 14vw, 10rem);
+      letter-spacing: -4px;
+      line-height: 1;
+      color: var(--text);
+    }
+    .stat-number span { color: var(--accent); }
+    .stat-body {
+      margin-top: 32px;
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      color: var(--text-mid);
+      max-width: 48ch;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.65;
+    }
+
+    /* ─── PRODUCT VISUAL ─── */
+    .product-section {
+      padding: 120px 24px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .product-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      color: var(--text);
+    }
+    .section-sub {
+      margin-top: 16px;
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 44ch;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .product-frame {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid rgba(15,118,149,0.2);
+      border-radius: 16px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(15,118,149,0.08), 0 -1px 0 0 rgba(15,118,149,0.15) inset;
+      overflow: hidden;
+    }
+    .dash-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .dash-topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dash-live-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(34,197,94,0.2); }
+      50% { box-shadow: 0 0 0 5px rgba(34,197,94,0.08); }
+    }
+    .dash-topbar-title { font-size: 0.875rem; font-weight: 600; color: var(--text); font-family: 'Space Grotesk', sans-serif; }
+    .dash-topbar-phone { font-size: 0.78rem; color: var(--muted); }
+    .dash-topbar-last { font-size: 0.78rem; color: var(--muted); }
+
+    .dash-body { padding: 28px; }
+
+    .dash-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .dash-kpi {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .dash-kpi-label { font-size: 0.72rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+    .dash-kpi-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .dash-kpi-value.accent { color: var(--accent); }
+    .dash-kpi-value.success { color: var(--success); }
+    .dash-kpi-meta { font-size: 0.72rem; color: var(--muted); margin-top: 5px; }
+
+    .dash-table-label { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+    .dash-table { width: 100%; border-collapse: collapse; }
+    .dash-table th { font-size: 0.72rem; font-weight: 500; color: var(--muted); text-align: left; padding: 0 12px 10px; border-bottom: 1px solid var(--border); }
+    .dash-table td { font-size: 0.82rem; color: var(--text-mid); padding: 11px 12px; border-bottom: 1px solid var(--border-soft); }
+    .dash-table tr:last-child td { border-bottom: none; }
+    .dash-table td:first-child { color: var(--text); font-weight: 500; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .badge-success { background: rgba(34,197,94,0.12); color: var(--success); }
+    .badge-info { background: rgba(15,118,149,0.12); color: var(--accent); }
+
+    /* ─── DEMO SECTION (preserved) ─── */
+    .demo-section-wrap {
+      padding: 120px 24px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .demo-section-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .demo-section-inner > h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .demo-section-inner > .section-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 48px;
+      text-align: center;
+    }
+    .demo-shell {
+      display: block;
+    }
+    .phone-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 380px;
+    }
+    .phone-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+    .play-btn {
+      width: 40px; height: 40px;
+      background: var(--accent);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .play-btn:hover { background: var(--accent-hover); }
+    .play-btn svg { width: 18px; height: 18px; fill: #fff; }
+    .phone-header-info { flex: 1; min-width: 0; }
+    .phone-header-title { font-size: 0.875rem; font-weight: 600; color: var(--text); }
+    .phone-header-sub { font-size: 0.78rem; color: var(--muted); }
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--muted);
+      flex-shrink: 0;
+    }
+    .status-dot.playing { background: var(--success); box-shadow: 0 0 0 3px rgba(34,197,94,0.2); }
+    .progress-wrap { flex-shrink: 0; }
+    .chat-area {
+      flex: 1;
+      padding: 20px 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .dmsg {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 12px;
+      align-items: baseline;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .dmsg:last-child { border-bottom: none; }
+    .msg-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .dmsg.ai .msg-label { color: var(--accent); }
+    .dbubble {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--text-mid);
+    }
+    .dmsg.ai .dbubble { color: var(--text); }
+    .typing-bubble {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      height: 20px;
+    }
+    .typing-bubble span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--muted);
+      animation: bounce 1.2s infinite;
+    }
+    .typing-bubble span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-bubble span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
+
+    .demo-reset-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: color 0.2s;
+      flex-shrink: 0;
+    }
+    .demo-reset-btn:hover { color: var(--text); }
+
+    /* ─── SCROLL OFFSET for fixed nav ─── */
+    #how-it-works, #demo, #pricing { scroll-margin-top: 80px; }
+
+    /* ─── HOW IT WORKS ─── */
+    .how-section {
+      padding: 120px 24px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .how-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .how-header { margin-bottom: 80px; }
+
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 32px;
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      opacity: 0.9;
+    }
+    .step-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .step-desc {
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      line-height: 1.65;
+      max-width: 54ch;
+    }
+
+    /* ─── COMPARISON ─── */
+    .compare-section {
+      padding: 120px 24px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .compare-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .compare-header { margin-bottom: 56px; }
+    .compare-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .compare-table { width: 100%; border-collapse: collapse; min-width: 540px; }
+    .compare-table th, .compare-table td { padding: 14px 20px; font-size: 0.875rem; text-align: left; border: 1px solid var(--border); }
+    .compare-table thead th { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; background: var(--surface); color: var(--muted); }
+    .compare-table thead th.col-shopdesk { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .compare-table thead th:first-child { background: var(--card); border-color: var(--border); }
+    .compare-table tbody tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+    .compare-table tbody td:first-child { color: var(--text-mid); font-weight: 500; background: var(--surface); }
+    .compare-table tbody td.val-human { color: var(--muted); }
+    .compare-table tbody td.val-shopdesk { color: var(--accent); font-weight: 600; }
+
+    /* ─── PRICING ─── */
+    .pricing-section {
+      padding: 120px 24px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .pricing-header { text-align: center; margin-bottom: 64px; }
+    .pricing-note { font-size: 0.85rem; color: var(--muted); margin-top: 12px; }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .pricing-card.featured {
+      background: var(--card);
+      border-color: rgba(15,118,149,0.35);
+      box-shadow: 0 0 0 1px rgba(15,118,149,0.1);
+    }
+    .plan-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 4px; }
+    .plan-tagline { font-size: 0.8rem; color: var(--muted); margin-bottom: 24px; }
+    .plan-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .plan-price span { font-size: 1rem; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+    .plan-founding { font-size: 0.75rem; color: var(--muted); margin-bottom: 24px; font-style: italic; }
+    .plan-divider { height: 1px; background: var(--border); margin: 24px 0; }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+    }
+    .plan-features li::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(34,197,94,0.15);
+      border: 1.5px solid rgba(34,197,94,0.35);
+      flex-shrink: 0;
+      margin-top: 1px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpolyline points='2,6 5,9 10,3' fill='none' stroke='%2322c55e' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-size: 10px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .plan-cta {
+      display: block;
+      text-align: center;
+      margin-top: 28px;
+      padding: 13px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .plan-cta-ghost {
+      border: 1px solid var(--border);
+      color: var(--text-mid);
+      background: rgba(255,255,255,0.03);
+    }
+    .plan-cta-ghost:hover { background: rgba(255,255,255,0.06); }
+    .plan-cta-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+    .plan-cta-accent:hover { background: var(--accent-hover); }
+
+    /* ─── CLOSING CTA ─── */
+    .closing-section {
+      padding: 120px 24px;
+      border-top: 1px solid var(--border-soft);
+      text-align: center;
+    }
+    .closing-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .closing-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-copy { font-size: 0.8rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.8rem; color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--text-mid); }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      #mainNav { padding: 0 20px; }
+      .nav-links { display: none; }
+
+      .hero { padding: 100px 20px 60px; }
+
+      .stat-number { letter-spacing: -2px; }
+
+      .product-section { padding: 80px 16px; }
+      .dash-kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .product-frame { overflow-x: auto; }
+
+      .demo-section-wrap { padding: 80px 20px; }
+      .demo-section-inner { max-width: 100%; }
+
+      .how-section { padding: 80px 20px; }
+      .step { grid-template-columns: 56px 1fr; gap: 20px; padding: 36px 0; }
+      .step-num { font-size: 3rem; }
+
+      .compare-section { padding: 80px 20px; }
+
+      .pricing-section { padding: 80px 20px; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+
+      .closing-section { padding: 80px 20px; }
+
+      footer { padding: 32px 20px; flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-actions { width: 100%; }
+      .btn-primary { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav id="mainNav">
+    <a href="/" class="logo">
+      <div class="logo-bar"></div>
+      <div class="logo-text">
+        <span class="logo-shop">SHOP</span>
+        <span class="logo-desk">DESK</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how-it-works">How it works</a></li>
+      <li><a href="#industries">Industries</a></li>
+      <li><a href="#demo">Hear a call</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <a href="https://calendly.com/slarve-shopdesk/30min" target="_blank" class="nav-cta">Book a demo</a>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <h1 class="hero-headline">
+      When your business can't answer,
+      <span class="accent-line">ShopDesk does.</span>
+    </h1>
+    <p class="hero-sub">Answers your calls, books the appointments, and shows you the results. You do nothing.</p>
+    <div class="hero-actions">
+      <a href="https://calendly.com/slarve-shopdesk/30min" target="_blank" class="btn-primary">Book a demo</a>
+      <a href="#demo" class="hero-demo-link">Hear a real call →</a>
+      <div class="trust-strip">
+        <div class="trust-chip"><div class="trust-chip-dot"></div>14-day free trial</div>
+        <div class="trust-chip"><div class="trust-chip-dot"></div>No credit card</div>
+        <div class="trust-chip accent"><div class="trust-chip-dot"></div>Live in 30 minutes</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EDITORIAL STAT ─── -->
+  <section class="stat-section">
+    <div class="stat-number"><span>73</span>%</div>
+    <p class="stat-body">of callers who reach voicemail never call back. Every missed ring is a customer who may call the next business on Google.</p>
+  </section>
+
+  <!-- ─── PRODUCT VISUAL ─── -->
+  <section class="product-section">
+    <div class="product-header">
+      <h2 class="section-headline">Here's what we handled this month.</h2>
+      <p class="section-sub">ShopDesk reports every call answered, every appointment booked, every customer recovered. You check the results. We do the work.</p>
+    </div>
+    <div class="product-frame">
+      <div class="dash-topbar">
+        <div class="dash-topbar-left">
+          <div class="dash-live-dot"></div>
+          <span class="dash-topbar-title">AI Receptionist is Live</span>
+          <span class="dash-topbar-phone">&middot; (407) 555-4875</span>
+        </div>
+        <span class="dash-topbar-last">Last call: 2:14 AM</span>
+      </div>
+      <div class="dash-body">
+        <div class="dash-kpi-row">
+          <div class="dash-kpi">
+            <div class="dash-kpi-label">Calls Handled</div>
+            <div class="dash-kpi-value">24</div>
+            <div class="dash-kpi-meta">this month</div>
+          </div>
+          <div class="dash-kpi">
+            <div class="dash-kpi-label">Bookings Made</div>
+            <div class="dash-kpi-value accent">17</div>
+            <div class="dash-kpi-meta">71% booking rate</div>
+          </div>
+          <div class="dash-kpi">
+            <div class="dash-kpi-label">Appointments Recovered</div>
+            <div class="dash-kpi-value success">17</div>
+            <div class="dash-kpi-meta">from missed calls</div>
+          </div>
+          <div class="dash-kpi">
+            <div class="dash-kpi-label">AI Status</div>
+            <div class="dash-kpi-value success" style="font-size:1.1rem;line-height:1.4;">Live 24/7</div>
+            <div class="dash-kpi-meta">always on</div>
+          </div>
+        </div>
+        <div class="dash-table-label">Recent Calls</div>
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Caller</th>
+              <th>Time</th>
+              <th>Details</th>
+              <th>Outcome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Alex Lopez</td>
+              <td>2:14 AM</td>
+              <td>Brake inspection</td>
+              <td><span class="badge badge-success">Booked</span></td>
+            </tr>
+            <tr>
+              <td>Marcus D.</td>
+              <td>7:42 PM</td>
+              <td>AC repair estimate</td>
+              <td><span class="badge badge-success">Booked</span></td>
+            </tr>
+            <tr>
+              <td>Priya M.</td>
+              <td>6:18 PM</td>
+              <td>Oil change</td>
+              <td><span class="badge badge-success">Booked</span></td>
+            </tr>
+            <tr>
+              <td>Unknown</td>
+              <td>3:55 PM</td>
+              <td>Not provided</td>
+              <td><span class="badge badge-info">Info Only</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── INDUSTRIES ─── -->
+  <section class="compare-section" id="industries">
+    <div class="compare-inner">
+      <div class="compare-header">
+        <h2 class="section-headline">Built for appointment-heavy service businesses.</h2>
+        <p class="section-sub" style="text-align:left;margin-left:0;margin-top:16px;">ShopDesk adapts the receptionist script, intake questions, and booking details to your industry. Every business gets the right questions asked and the right information captured.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card"><div class="plan-name">Auto repair</div><div class="plan-tagline">Vehicle, issue, urgency, preferred time</div></div>
+        <div class="pricing-card"><div class="plan-name">Home services</div><div class="plan-tagline">Service address, job type, access notes</div></div>
+        <div class="pricing-card"><div class="plan-name">Salon & spa</div><div class="plan-tagline">Service type, stylist preference, appointment time</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── INTERACTIVE DEMO (preserved) ─── -->
+  <div class="demo-section-wrap" id="demo">
+    <div class="demo-section-inner">
+      <h2>Hear what happens when a missed call gets saved</h2>
+      <p class="section-desc">Hit play and hear ShopDesk answer after hours, collect the right details, and book the appointment while the dashboard updates in real time.</p>
+
+      <div class="demo-shell">
+        <!-- Left: Phone / Chat -->
+        <div class="phone-panel">
+          <div class="phone-header">
+            <button class="play-btn" id="playBtn" onclick="startDemo()" title="Play demo">
+              <svg id="iconPlay" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <svg id="iconPause" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+            <div class="phone-header-info">
+              <div class="phone-header-title">Live Demo Call</div>
+              <div class="phone-header-sub">Auto repair template &middot; After-hours booking</div>
+            </div>
+            <div class="status-pill">
+              <div class="status-dot" id="statusDot"></div>
+              <span id="statusText">Ready</span>
+            </div>
+            <button class="demo-reset-btn" onclick="resetDemo()" title="Restart">&#8635;</button>
+          </div>
+          <div class="progress-wrap" id="progressWrap" style="height:3px;background:rgba(255,255,255,0.06);"><div class="progress-bar" id="progressBar" style="height:100%;background:var(--accent);width:0%;transition:width 0.25s linear;"></div></div>
+          <div class="chat-area" id="chatArea"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── HOW IT WORKS ─── -->
+  <section class="how-section" id="how-it-works">
+    <div class="how-inner">
+    <div class="how-header">
+      <h2 class="section-headline">Live in about 30 minutes.</h2>
+      <p class="section-sub" style="text-align:left;margin-left:0;">You keep your number. You forward unanswered calls. ShopDesk picks up when your team can't.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Tell us about your business</div>
+          <p class="step-desc">Your name, what you do, and your hours. That's it. We build and configure your AI receptionist automatically based on your business.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Forward unanswered calls</div>
+          <p class="step-desc">Your team still answers first. If nobody picks up after a few rings, ShopDesk steps in automatically. Standard call forwarding takes about 30 seconds to set up.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Check what we recovered</div>
+          <p class="step-desc">Every call we answered shows up as a transcript, recording, and booked appointment. You see the results. You don't manage anything.</p>
+        </div>
+      </div>
+    </div>
+    </div><!-- /.how-inner -->
+  </section>
+
+  <!-- ─── COMPARISON ─── -->
+  <section class="compare-section">
+    <div class="compare-inner">
+    <div class="compare-header">
+      <h2 class="section-headline">Not another hire.<br> A safety net.</h2>
+      <p class="section-sub" style="text-align:left;margin-left:0;margin-top:16px;">ShopDesk covers the calls your team can't get to, especially when you are busy, with a customer, or closed for the day.</p>
+    </div>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Human Receptionist</th>
+            <th class="col-shopdesk">ShopDesk AI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Annual cost</td>
+            <td class="val-human">$40,000 &ndash; $62,000</td>
+            <td class="val-shopdesk">$948/year (Starter)</td>
+          </tr>
+          <tr>
+            <td>Hours covered</td>
+            <td class="val-human">40 hrs/week</td>
+            <td class="val-shopdesk">24/7/365</td>
+          </tr>
+          <tr>
+            <td>Sick days</td>
+            <td class="val-human">Yes</td>
+            <td class="val-shopdesk">Never</td>
+          </tr>
+          <tr>
+            <td>Hold times</td>
+            <td class="val-human">Common</td>
+            <td class="val-shopdesk">Zero</td>
+          </tr>
+          <tr>
+            <td>Simultaneous calls</td>
+            <td class="val-human">1</td>
+            <td class="val-shopdesk">Unlimited</td>
+          </tr>
+          <tr>
+            <td>Setup time</td>
+            <td class="val-human">Weeks</td>
+            <td class="val-shopdesk">30 minutes</td>
+          </tr>
+          <tr>
+            <td>Knows your business</td>
+            <td class="val-human">Takes months</td>
+            <td class="val-shopdesk">Day one</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div><!-- /.compare-inner -->
+  </section>
+
+  <!-- ─── PRICING ─── -->
+  <section class="pricing-section" id="pricing">
+    <div class="pricing-header">
+      <h2 class="section-headline">Simple pricing.<br>Cancel anytime.</h2>
+      <p class="pricing-note">Founding member pricing, locked in as long as you stay.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-tagline">For businesses testing the waters</div>
+        <div class="plan-price">$79<span>/mo</span></div>
+        <div class="plan-founding">Founding member pricing</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>~150 calls answered/month</li>
+          <li>AI answers every unanswered call 24/7</li>
+          <li>Booking to Google Calendar</li>
+          <li>Call transcripts &amp; recordings</li>
+          <li>SMS confirmation to callers</li>
+          <li>Dashboard access</li>
+        </ul>
+        <a href="https://calendly.com/slarve-shopdesk/30min" target="_blank" class="plan-cta plan-cta-ghost">Book a demo</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="plan-name">Pro</div>
+        <div class="plan-tagline">Most popular for growing teams</div>
+        <div class="plan-price">$159<span>/mo</span></div>
+        <div class="plan-founding">Founding member pricing</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>~400 calls answered/month</li>
+          <li>Everything in Starter</li>
+          <li>Missed call text-back (coming soon)</li>
+          <li>Review request automation (coming soon)</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="https://calendly.com/slarve-shopdesk/30min" target="_blank" class="plan-cta plan-cta-accent">Book a demo</a>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">Growth</div>
+        <div class="plan-tagline">For high-volume businesses</div>
+        <div class="plan-price">$319<span>/mo</span></div>
+        <div class="plan-founding">Founding member pricing</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>~1,000 calls answered/month</li>
+          <li>Everything in Pro</li>
+          <li>Multi-location support (coming soon)</li>
+          <li>Dedicated onboarding &amp; support</li>
+        </ul>
+        <a href="https://calendly.com/slarve-shopdesk/30min" target="_blank" class="plan-cta plan-cta-ghost">Book a demo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CLOSING CTA ─── -->
+  <section class="closing-section">
+    <div class="closing-inner">
+      <h2 class="section-headline" style="margin-bottom:24px;">Stop losing customers to voicemail.</h2>
+      <p class="closing-sub">ShopDesk answers every call your team can't, books the appointment, and sends the confirmation. You keep your number, your workflow, and your time.</p>
+      <a href="https://calendly.com/slarve-shopdesk/30min" target="_blank" class="btn-primary" style="display:inline-flex;">Book a demo</a>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <a href="/" class="logo">
+      <div class="logo-bar"></div>
+      <div class="logo-text">
+        <span class="logo-shop">SHOP</span>
+        <span class="logo-desk">DESK</span>
+      </div>
+    </a>
+    <span class="footer-copy">&copy; 2026 ShopDesk. All rights reserved.</span>
+    <nav class="footer-links">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </nav>
+  </footer>
+
+  <!-- ─── NAV SCROLL BEHAVIOR ─── -->
+  <script>
+  (function(){
+    const nav = document.getElementById('mainNav');
+    function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 20); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+  <!-- ─── DEMO PLAYER ─── -->
+  <script>
+  (function(){
+    const SCRIPT=[
+      { t: 0.000, speaker:'ai',     text:"Mike's Auto Repair, you've reached us after hours. I'm ShopDesk, the AI assistant. I can get you booked right now. What kind of car do you have?" },
+      { t: 8.534, speaker:'caller', text:"Yeah hey, it's a 2018 Honda CR-V." },
+      { t:12.099, speaker:'ai',     text:"CR-V, got it. And roughly how many miles on it?" },
+      { t:15.432, speaker:'caller', text:"Uh, around 67,000 I think." },
+      { t:18.208, speaker:'ai',     text:"Good to know. What's going on with it?" },
+      { t:20.844, speaker:'caller', text:"There's this grinding sound every time I brake. Started a couple weeks ago and it's getting worse." },
+      { t:26.545, speaker:'ai',     text:"That grinding on braking is almost always worn brake pads. And if you let it go, it'll damage the rotors too. We should get you in for a brake inspection. Can I get your name?" },
+      { t:36.844, speaker:'caller', text:"Alex Lopez." },
+      { t:38.644, speaker:'ai',     text:"Alex, what's the best number to reach you?" },
+      { t:41.234, speaker:'caller', text:"407-555-0198." },
+      { t:44.149, speaker:'ai',     text:"Perfect. I've got tomorrow morning at 10:30, or Wednesday at 2 in the afternoon. Which works for you?" },
+      { t:50.872, speaker:'caller', text:"Tomorrow at 10:30 is good." },
+      { t:53.229, speaker:'ai',     text:"You're all set, Alex. Brake inspection at Mike's Auto Repair, tomorrow at 10:30 AM. We'll send a confirmation to 407-555-0198 and a reminder the night before. The team will call you with a quote before doing any work. Anything else?" },
+      { t:71.377, speaker:'caller', text:"No, that's perfect. Thanks." },
+      { t:73.502, speaker:'ai',     text:"Great, see you tomorrow. Drive safe!" },
+    ];
+    const TOTAL=76.0;
+    const audio=new Audio('demo_audio/full_demo.mp3');
+    let nextIdx=0,typingEl=null,rafId=null,activeTw=null;
+    const chatArea=document.getElementById('chatArea');
+    const pBar=document.getElementById('progressBar');
+    const statusDot=document.getElementById('statusDot');
+    const statusTxt=document.getElementById('statusText');
+    const iconPlay=document.getElementById('iconPlay');
+    const iconPause=document.getElementById('iconPause');
+
+    function setPlaying(on){iconPlay.style.display=on?'none':'';iconPause.style.display=on?'':'none';statusDot.className='status-dot'+(on?' playing':'');statusTxt.textContent=on?'Playing':(audio.ended?'Done':'Paused');}
+    function addTyping(){removeTyping();const el=document.createElement('div');el.className='dmsg ai';el.id='dtyping';el.innerHTML='<div class="msg-label">ShopDesk</div><div class="dbubble"><div class="typing-bubble"><span></span><span></span><span></span></div></div>';chatArea.appendChild(el);chatArea.scrollTop=chatArea.scrollHeight;typingEl=el;}
+    function removeTyping(){if(typingEl){typingEl.remove();typingEl=null;}}
+    function typewriterMessage(step){
+      removeTyping();if(activeTw){clearInterval(activeTw);activeTw=null;}
+      const wrap=document.createElement('div');wrap.className=`dmsg ${step.speaker}`;
+      const label=step.speaker==='ai'?'ShopDesk':'Caller';
+      wrap.innerHTML=`<div class="msg-label">${label}</div><div class="dbubble"></div>`;
+      chatArea.appendChild(wrap);chatArea.scrollTop=chatArea.scrollHeight;
+      const bubble=wrap.querySelector('.dbubble');const text=step.text;let i=0;
+      const nextT=nextIdx<SCRIPT.length?SCRIPT[nextIdx].t:TOTAL;
+      const avail=Math.min((nextT-step.t)*0.8,3.0);
+      const interval=Math.max(18,(avail*1000)/text.length);
+      activeTw=setInterval(()=>{bubble.textContent=text.slice(0,++i);chatArea.scrollTop=chatArea.scrollHeight;if(i>=text.length){clearInterval(activeTw);activeTw=null;}},interval);
+    }
+    function tick(){
+      if(audio.paused||audio.ended){rafId=null;return;}
+      const ct=audio.currentTime;
+      pBar.style.width=((ct/TOTAL)*100).toFixed(2)+'%';
+      while(nextIdx<SCRIPT.length&&ct>=SCRIPT[nextIdx].t){
+        const step=SCRIPT[nextIdx++];
+        if(step.speaker==='ai'&&nextIdx>1)addTyping();
+        setTimeout(()=>{typewriterMessage(step);},step.speaker==='ai'?120:0);
+      }
+      rafId=requestAnimationFrame(tick);
+    }
+    function doReset(andPlay){
+      audio.pause();audio.currentTime=0;
+      if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+      if(activeTw){clearInterval(activeTw);activeTw=null;}
+      nextIdx=0;typingEl=null;chatArea.innerHTML='';pBar.style.width='0%';
+      setPlaying(false);statusTxt.textContent='Ready';
+      if(andPlay){audio.play().then(()=>{setPlaying(true);rafId=requestAnimationFrame(tick);}).catch(e=>console.warn('Autoplay blocked:',e));}
+    }
+    function renderPastSteps(upToTime){
+      chatArea.innerHTML='';
+      if(activeTw){clearInterval(activeTw);activeTw=null;}
+      typingEl=null;
+      SCRIPT.forEach(step=>{
+        if(step.t>upToTime)return;
+        const wrap=document.createElement('div');wrap.className=`dmsg ${step.speaker}`;
+        const label=step.speaker==='ai'?'ShopDesk':'Caller';
+        const msgLabel=document.createElement('div');msgLabel.className='msg-label';msgLabel.textContent=label;
+        const bubble=document.createElement('div');bubble.className='dbubble';bubble.textContent=step.text;
+        wrap.appendChild(msgLabel);wrap.appendChild(bubble);
+        chatArea.appendChild(wrap);
+      });
+      chatArea.scrollTop=chatArea.scrollHeight;
+    }
+    window.startDemo=function(){
+      if(audio.ended){
+        doReset(true);
+      } else if(audio.paused){
+        const ct=audio.currentTime;
+        renderPastSteps(ct);
+        nextIdx=SCRIPT.findIndex(s=>s.t>ct);
+        if(nextIdx===-1)nextIdx=SCRIPT.length;
+        audio.play().then(()=>{setPlaying(true);rafId=requestAnimationFrame(tick);}).catch(e=>console.warn('Autoplay blocked:',e));
+      } else {
+        audio.pause();if(rafId){cancelAnimationFrame(rafId);rafId=null;}setPlaying(false);
+      }
+    };
+    window.resetDemo=function(){doReset(false);};
+    audio.addEventListener('ended',()=>{if(rafId){cancelAnimationFrame(rafId);rafId=null;}pBar.style.width='100%';setPlaying(false);statusTxt.textContent='Done';});
+  })();
+  </script>
+
+</body>
+</html>
+<script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="1eac4d24-ddbd-4bbf-abca-572db84d0c75" data-app-host="app.netlify.com" data-account-tier="free"></script>

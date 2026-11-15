@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=1eac4d24-ddbd-4bbf-abca-572db84d0c75
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMS Consent, ShopDesk</title>
+  <meta name="description" content="ShopDesk SMS messaging consent policy, how we collect consent, what messages we send, and how to opt out." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b141e'/%3E%3Crect x='7' y='6' width='4' height='20' rx='2' fill='%230F7695'/%3E%3Ctext x='13' y='17' fill='%23F4F5F7' font-family='Arial' font-size='9' font-weight='700' letter-spacing='0.5'%3ESHOP%3C/text%3E%3Ctext x='13' y='25' fill='%237A8899' font-family='Arial' font-size='7' font-weight='500' letter-spacing='1'%3EDESK%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:           #04070f;
+      --surface:      #0b141e;
+      --card:         #0f1824;
+      --border:       rgba(255,255,255,0.08);
+      --accent:       #0f7695;
+      --text:         #f4f5f7;
+      --text-mid:     #c3cad5;
+      --muted:        #7a8899;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-bar {
+      width: 4px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .logo span { color: var(--muted); font-weight: 400; }
+    nav a.back {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    nav a.back:hover { color: var(--text); }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+    }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .effective {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 48px;
+    }
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 40px 0 12px;
+    }
+    p { color: var(--text-mid); margin-bottom: 16px; }
+    ul {
+      color: var(--text-mid);
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+    ul li { margin-bottom: 8px; }
+    ol {
+      color: var(--text-mid);
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+    ol li { margin-bottom: 12px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* Consent statement box */
+    .consent-box {
+      background: var(--card);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin: 24px 0 32px;
+    }
+    .consent-box p {
+      color: var(--text-mid);
+      margin-bottom: 0;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    /* Sample opt-in checkbox */
+    .sample-optin {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 20px 0 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .sample-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--accent);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      background: var(--surface);
+    }
+    .sample-optin p {
+      color: var(--text-mid);
+      margin-bottom: 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Sub-sections */
+    .consent-party {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .consent-party h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .consent-party p {
+      color: var(--text-mid);
+      margin-bottom: 0;
+      font-size: 14px;
+    }
+    .consent-party blockquote {
+      border-left: 3px solid var(--accent);
+      padding-left: 14px;
+      margin: 10px 0 0;
+      color: var(--text-mid);
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    /* Numbered steps */
+    .step-list {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 16px;
+    }
+    .step-list li {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .step-num {
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-body {
+      color: var(--text-mid);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .step-body strong { color: var(--text); }
+    .step-body .ai-says {
+      display: block;
+      border-left: 3px solid var(--accent);
+      padding-left: 14px;
+      margin-top: 8px;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--text-mid);
+    }
+
+    /* Sample message cards */
+    .sample-msg {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .sample-msg .msg-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .sample-msg p {
+      font-size: 14px;
+      color: var(--text-mid);
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+
+    /* Compliance table */
+    .compliance-list {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 16px;
+    }
+    .compliance-list li {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+      align-items: flex-start;
+    }
+    .compliance-list li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-bar"></div>
+    ShopDesk <span>AI</span>
+  </a>
+  <a href="/" class="back">Back to home</a>
+</nav>
+
+<div class="container">
+  <h1>SMS Messaging Consent</h1>
+  <p class="effective">Last updated: April 9, 2026</p>
+
+  <p>ShopDesk uses SMS messaging to keep business owners and their customers informed about appointments, booking activity, and urgent business alerts. This page explains what messages we send, how we collect consent, and how to opt out. This page is provided to satisfy carrier registration requirements under TCR/Twilio 10DLC guidelines.</p>
+
+  <h2>What Messages We Send</h2>
+  <p>ShopDesk sends the following types of SMS messages:</p>
+  <ul>
+    <li><strong>Appointment confirmations</strong>, Sent to customers immediately after a booking is made via our AI receptionist</li>
+    <li><strong>Appointment reminders</strong>, Sent to customers 24 hours before their scheduled appointment</li>
+    <li><strong>Booking alerts</strong>, Sent to business owners and staff when a new appointment is booked</li>
+    <li><strong>Missed call follow-up</strong>, Sent to callers who called but did not complete a booking</li>
+    <li><strong>Emergency notifications</strong>, Sent to the designated emergency contact when a caller reports an urgent situation, such as a same-day service issue, access problem, or other caller-reported emergency</li>
+  </ul>
+
+  <h2>Consent Statement</h2>
+  <p>The following consent applies to all SMS communications from ShopDesk:</p>
+
+  <div class="consent-box">
+    <p>By providing your phone number to ShopDesk, you agree to receive SMS messages including appointment confirmations, reminders, and business alerts that you specifically opted in to receive. Message frequency varies based on booking activity. Msg &amp; data rates may apply. Reply STOP to opt out at any time. Reply HELP for help.</p>
+  </div>
+
+  <p>Below is a sample of the opt-in checkbox presented to business owners during account setup. Providing an owner mobile number and agreeing to receive owner alerts are both optional.</p>
+
+  <div class="sample-optin">
+    <div class="sample-checkbox"></div>
+    <p>I agree to receive SMS booking alerts and urgent business notifications at this number. Consent is optional. Msg &amp; data rates may apply. Reply STOP to opt out. Reply HELP for help. See our <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.</p>
+  </div>
+
+  <h2>How SMS Consent Works, Step by Step</h2>
+  <p>The following describes the exact consent collection flow for every customer booking made through ShopDesk:</p>
+
+  <ul class="step-list">
+    <li>
+      <div class="step-num">1</div>
+      <div class="step-body"><strong>Customer calls the business.</strong> The call is answered by the ShopDesk AI receptionist on behalf of the business.</div>
+    </li>
+    <li>
+      <div class="step-num">2</div>
+      <div class="step-body"><strong>ShopDesk AI receptionist answers</strong> and assists the customer with scheduling an appointment, collecting name, service details, service type, and preferred time.</div>
+    </li>
+    <li>
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>AI asks for the customer's mobile number for the confirmation text:</strong>
+        <span class="ai-says">"What is the best phone number to send your confirmation to?"</span>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">4</div>
+      <div class="step-body"><strong>Customer verbally provides their mobile number.</strong> The AI repeats it back to confirm accuracy.</div>
+    </li>
+    <li>
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <strong>AI reads the consent disclosure aloud, word for word:</strong>
+        <span class="ai-says">"Got it. You will receive a confirmation text at that number shortly. By providing your number, you agree to receive appointment confirmation and reminder texts from [Business Name]. Msg and data rates may apply. Reply STOP at any time to opt out."</span>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">6</div>
+      <div class="step-body"><strong>Customer verbally confirms or does not object.</strong> Absence of objection after the disclosure is treated as consent. The booking is finalized and consent is recorded.</div>
+    </li>
+    <li>
+      <div class="step-num">7</div>
+      <div class="step-body"><strong>ShopDesk logs the consent record</strong> in our secure database, including: phone number, consent timestamp, call ID, appointment ID, business ID, and opt-in source = <code style="background:rgba(255,255,255,0.07);padding:1px 6px;border-radius:4px;font-size:13px;">"phone_call_verbal"</code>.</div>
+    </li>
+  </ul>
+
+  <h2>How We Collect Consent</h2>
+
+  <div class="consent-party">
+    <h3>Customers (Callers)</h3>
+    <p>When a customer books an appointment via our AI receptionist, the AI verbally collects the customer's phone number and reads the consent disclosure aloud before any text is sent. The exact language used is:</p>
+    <blockquote>"Got it. You will receive a confirmation text at that number shortly. By providing your number, you agree to receive appointment confirmation and reminder texts from [Business Name]. Msg and data rates may apply. Reply STOP at any time to opt out."</blockquote>
+    <p style="margin-top:12px;">Consent is recorded at the time of booking confirmation along with the call ID and timestamp.</p>
+  </div>
+
+  <div class="consent-party">
+    <h3>Shop Owners &amp; Staff</h3>
+    <p>During account setup at <a href="https://app.shopdesk.site">app.shopdesk.site</a>, business owners can optionally provide a mobile number and optionally check a box agreeing to receive booking alerts and emergency notifications. If no number is provided or the box is left unchecked, onboarding still continues and no owner-alert SMS messages are sent.</p>
+  </div>
+
+  <h2>Consent Logging</h2>
+  <p>ShopDesk logs the following data at the time of consent for every customer who provides a phone number during a call:</p>
+  <ul>
+    <li><strong>Phone number</strong>, the number provided verbally by the customer</li>
+    <li><strong>Timestamp</strong>, the exact date and time consent was recorded (UTC)</li>
+    <li><strong>Call ID</strong>, the unique identifier for the phone call in which consent was given</li>
+    <li><strong>Appointment ID</strong>, the booking record linked to this consent</li>
+    <li><strong>Business ID</strong>, the business on whose behalf the number was collected</li>
+    <li><strong>Opt-in source</strong>, recorded as <code style="background:rgba(255,255,255,0.07);padding:1px 6px;border-radius:4px;font-size:13px;">"phone_call_verbal"</code> for all call-based bookings</li>
+  </ul>
+  <p>This record is retained for compliance purposes and is available upon request for carrier or regulatory review.</p>
+
+  <h2>TCPA Compliance Statement</h2>
+  <p>ShopDesk supports compliance with the Telephone Consumer Protection Act (TCPA) by:</p>
+  <ul class="compliance-list">
+    <li>Collecting verbal consent during the phone call booking flow, before any message is sent</li>
+    <li>Clearly identifying the business by name in every message sent to customers</li>
+    <li>Disclosing that message and data rates may apply in the consent language and in every message</li>
+    <li>Providing opt-out instructions (Reply STOP) in every outbound message</li>
+    <li>Honoring STOP requests immediately, no further messages are sent after an opt-out</li>
+    <li>Logging consent with a timestamp and call ID to provide an auditable record</li>
+  </ul>
+  <p>ShopDesk does not send marketing or promotional messages. All messages are transactional and directly related to booked appointments or urgent business alerts.</p>
+
+  <h2>Message Types and Frequency</h2>
+  <p>ShopDesk sends only transactional messages. Message types are:</p>
+  <ul>
+    <li><strong>Appointment confirmation</strong>, sent immediately after booking is complete</li>
+    <li><strong>24-hour reminder</strong>, sent the day before the scheduled appointment</li>
+    <li><strong>Missed call follow-up</strong>, sent if a customer called but did not complete a booking</li>
+    <li><strong>Emergency alert to business owner</strong>, sent if the caller reports a urgent service issue</li>
+  </ul>
+  <p><strong>Frequency:</strong> Transactional only. Typically 1-3 messages per appointment. No marketing or promotional messages are ever sent.</p>
+
+  <h2>Sample Messages</h2>
+  <p>The following are examples of messages sent by ShopDesk. Every message includes the business name, opt-out instructions, and a message and data rates disclosure.</p>
+
+  <div class="sample-msg">
+    <div class="msg-label">Appointment Confirmation, Customer</div>
+    <p>Hi [First Name], your appointment at [Business Name] is confirmed for [Day] at [Time]. Questions? Call us. Reply STOP to opt out. Msg &amp; data rates may apply.</p>
+  </div>
+
+  <div class="sample-msg">
+    <div class="msg-label">New Booking Alert, Business Owner</div>
+    <p>[Business Name]: New booking, [Customer Name], [Vehicle], [Date] at [Time] for [Service]. Reply STOP to opt out. Msg &amp; data rates may apply.</p>
+  </div>
+
+  <div class="sample-msg">
+    <div class="msg-label">24-Hour Reminder, Customer</div>
+    <p>Hi [First Name], reminder from [Business Name]: your appointment is tomorrow at [Time]. Reply STOP to opt out. Msg &amp; data rates may apply.</p>
+  </div>
+
+  <div class="sample-msg">
+    <div class="msg-label">Emergency Alert, Business Owner</div>
+    <p>[Business Name] ALERT: Caller reported a breakdown. Customer: [Name], [Phone]. Please follow up. Reply STOP to opt out. Msg &amp; data rates may apply.</p>
+  </div>
+
+  <div class="sample-msg">
+    <div class="msg-label">Missed Call Follow-Up, Customer</div>
+    <p>Hi [First Name], we missed your call at [Business Name]. We will follow up within 1 business day. Reply STOP to opt out. Msg &amp; data rates may apply.</p>
+  </div>
+
+  <h2>Opt-Out Instructions</h2>
+  <p>You can stop receiving SMS messages from ShopDesk at any time:</p>
+  <ul>
+    <li>Reply <strong>STOP</strong> to any ShopDesk SMS message to unsubscribe immediately</li>
+    <li>Reply <strong>HELP</strong> to any message to receive support information</li>
+    <li>Contact us directly at <a href="mailto:slarve@shopdesk.site">slarve@shopdesk.site</a> to request removal</li>
+  </ul>
+  <p>After opting out, you will receive one final confirmation message and no further SMS communications will be sent.</p>
+
+  <hr class="divider" />
+
+  <h2>Terms &amp; Privacy</h2>
+  <p>The owner opt-in disclosure is tied to these policies and they are presented alongside the opt-in flow:</p>
+  <ul>
+    <li><a href="/terms">Terms of Service</a>, Your agreement with ShopDesk</li>
+    <li><a href="/privacy">Privacy Policy</a>, How we collect, use, and protect your information</li>
+  </ul>
+
+  <h2>Related Policies</h2>
+  <ul>
+    <li><a href="/privacy">Privacy Policy</a>, How we collect, use, and protect your information</li>
+    <li><a href="/terms">Terms of Service</a>, Your agreement with ShopDesk</li>
+  </ul>
+
+  <h2>Contact Us</h2>
+  <p>Questions about SMS consent or messaging? Contact us:</p>
+  <ul>
+    <li>Email: <a href="mailto:slarve@shopdesk.site">slarve@shopdesk.site</a></li>
+    <li>Website: <a href="https://shopdesk.site">shopdesk.site</a></li>
+  </ul>
+</div>
+
+<footer>
+  <p>&copy; 2026 ShopDesk. All rights reserved. &nbsp;|&nbsp; <a href="/privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/terms">Terms of Service</a></p>
+</footer>
+
+</body>
+</html>
+<script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="1eac4d24-ddbd-4bbf-abca-572db84d0c75" data-app-host="app.netlify.com" data-account-tier="free"></script>
